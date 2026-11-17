@@ -29,6 +29,12 @@ Do **not** give reviewers this folder or `answer-key.md`. Score the result again
 
 | Date | Starter commit | Recall | Decoy | Verdict | Extra findings | Subagent tokens |
 |---|---|---|---|---|---|---|
+| 2026-11-17 | `9ebad7b` | 5/5 | not reported ✅ | BLOCK ✅ | migration gap (now CONFIRMED: `connect()` takes a file path); `share_note` silently succeeds on notes you don't own, and there's no unshare (minor) | ~76k across 6 agents (manager ~6k) |
 | 2026-11-17 | `ccdb4a8` | 5/5 | not reported ✅ | BLOCK ✅ | migration gap for the `shared` column (real, PLAUSIBLE) | ~75k across 6 agents (manager ~6k) |
 
-Issues found in that run, fixed in the next commit: no `origin/HEAD` in local repos; duplicate rule missed the same bug reported 6 lines apart; test-gap findings marked critical.
+Issues found in the `ccdb4a8` run, fixed in `9ebad7b` and checked in the run above:
+- No `origin/HEAD` in local repos. ✅ The review fell back to `main` without being told.
+- The duplicate rule missed the same bug reported 6 lines apart. ✅ Lines 50 and 56 merged as the same function.
+- Test-gap findings were marked critical. ✅ All were major or minor.
+
+The `9ebad7b` run also showed that the security reviewer opens the security-audit skill (`SKILL.md`, `ATTACK-CLASSES.md`, by its own report).
