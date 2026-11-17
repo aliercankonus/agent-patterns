@@ -19,6 +19,7 @@ Finding format: `.claude/skills/e2e-code-review/finding-schema.json`. Every revi
    - Cap `test-gap` findings at `major`: a missing test is never critical on its own. The defect it would have caught is reported separately.
    - **Don't trust empty results blindly.** If a reviewer returns `[]` for a unit tagged high-risk, do one targeted check yourself (e.g. grep the unit's diff for the risky call), or re-run that reviewer one model tier up.
    - If any agent claims it ran tests or changed something, confirm with the command output or `git diff`, not its word.
+   - When the `security-audit` extra is installed, `security_audit_files_read` from `security-reviewer` must include `ATTACK-CLASSES.md` and one companion file. If either is missing, re-run the security reviewer once with that requirement spelled out in its brief.
 5. **Verify.** Send all merged findings to one `finding-verifier`. Drop REJECTED findings and mark PLAUSIBLE ones as such.
 6. **Verdict.** Send `eng-manager` only the verified findings + `git diff --stat` + test results + PR body.
 7. **Report.** Print the manager verdict, then the findings grouped by severity as `file:line — claim — fix`. With `--comment` and a PR target, post inline comments via `gh`.
