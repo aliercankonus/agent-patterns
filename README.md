@@ -59,8 +59,10 @@ Existing files are never overwritten unless you pass `--force`. If the project a
 ```
 
 ```bash
-./bootstrap.sh ../my-project --with skill-creator
+./bootstrap.sh ../my-project --with recommended
 ```
+
+`recommended` installs four vetted extras: `skill-creator`, `verification-before-completion`, `ponytail` and `security-audit`. You can also name extras one by one, e.g. `--with ponytail,security-audit`.
 
 Each install records the starter version and extras in `.claude/agent-patterns.version`, so you can tell later which projects are behind.
 

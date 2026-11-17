@@ -19,14 +19,18 @@ Reviewed 2026-11-17 against `https://collectivebrain.de/skills.json` (**100 skil
 
 ## Adopt (vendor into `extras/`)
 
+**Status: vendored 2026-11-17** (`extras/skills/`, install with `--with recommended`).
+
 | Skill | Upstream @ commit read | License | Why | Notes |
 |---|---|---|---|---|
 | `skill-creator` | `anthropics/skills` @ `e4bb5d9` (`skills/skill-creator`) | Apache-2.0 | Builds and evaluates new skills, including description tuning for triggering. This repo's job is growing skills. | 485-line SKILL.md + 17 files. Long, but only loaded on demand. |
 | `verification-before-completion` | `obra/superpowers` @ `22f0b46` | MIT | "No completion claims without fresh verification evidence." Cheap, and it backs up our finding-verifier and test-reviewer. | 120 lines. Take this skill only, not the whole Superpowers plugin (see below). |
-| `ponytail` (+ optionally `ponytail-review`) | `dietrichgebert/ponytail` @ `96608e0` | MIT | Smallest complete change. Smaller diffs mean fewer tokens, faster reviews and less risk. It keeps validation, security and tests ("never cut"). | 52 lines. The repo also ships hooks and other harness files; vendor only `skills/ponytail*`. |
+| `ponytail` | `dietrichgebert/ponytail` @ `96608e0` | MIT | Smallest complete change. Smaller diffs mean fewer tokens, faster reviews and less risk. It keeps validation, security and tests ("never cut"). | 52 lines. Vendored without the repo's hooks and commands. `ponytail-review` was left out because it duplicates our `code-reviewer`. |
 | `security-audit` | `cloudflare/security-audit-skill` @ `c1c8a8c` | MIT | Evidence-first security review with strict sandbox rules (no network, no live targets). It becomes the security lane of `/e2e-code-review`. | 192 lines. Defaults to guidance mode and only runs the full audit when explicitly asked. |
 
 ## Borrow ideas (don't install)
+
+**Status: applied 2026-11-17.** The ruling ledger, spec checks, status tokens and absence spot-checks are now in `/delegate` and the brief template; the handoff additions are in `/context-handoff`; the absence spot-check is also in `/e2e-code-review`. task-observer remains an idea for later.
 
 | Skill | What to take | Why not install |
 |---|---|---|

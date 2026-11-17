@@ -13,25 +13,36 @@ Every skill and agent that ships with this starter is listed here. Third-party s
 | code-reviewer | agent | this repo | Developer-perspective review |
 | test-reviewer | agent | this repo | Tester-perspective review, runs the tests |
 | finding-verifier | agent | this repo | Fresh-context false-positive filter |
+| security-reviewer | agent | this repo | Security lane of the review; uses the `security-audit` extra when installed |
 | eng-manager | agent | this repo | Merge verdict from verified findings |
 
 ## Extras (opt-in with `--with`)
 
+Install all four with `--with recommended`. Each folder has an `UPSTREAM.md` with the full commit hash.
+
 | Name | Kind | Source (original, not a mirror) | Pinned commit | Reviewed (who, date) | Why |
 |---|---|---|---|---|---|
-| _none yet_ | | | | | |
+| skill-creator | skill | `anthropics/skills` → `skills/skill-creator` | `e4bb5d9` | Claude for the repo owner, 2026-11-17 | Build and evaluate new skills |
+| verification-before-completion | skill | `obra/superpowers` → `skills/verification-before-completion` | `22f0b46` | Claude for the repo owner, 2026-11-17 | No "done" claims without fresh evidence |
+| ponytail | skill | `dietrichgebert/ponytail` → `skills/ponytail` | `96608e0` | Claude for the repo owner, 2026-11-17 | Smallest complete change; smaller diffs |
+| security-audit | skill | `cloudflare/security-audit-skill` → `skills/security-audit` | `c1c8a8c` | Claude for the repo owner, 2026-11-17 | Evidence-first security review; powers `security-reviewer` |
+
+### Review notes
+- **Read in full:** every SKILL.md, and all executable code checked for network access, process execution and file writes, with every hit read in context.
+- **Checked by keyword scan only** (not read line by line): skill-creator `agents/*.md` and `references/schemas.md`, and security-audit's companion reference files. These are reference material loaded on demand. A reviewer may want to read them before relying on them.
+- **skill-creator behaviours to know about:**
+  - `run_eval.py` / `run_loop.py` / `improve_description.py` start `claude -p` subprocesses, which spend tokens on your account.
+  - `run_eval.py` writes a temporary command file under `.claude/commands/` and deletes it afterwards.
+  - `generate_review.py` serves a viewer on 127.0.0.1 and stops (SIGTERM) whatever already listens on its port.
+  - The viewer HTML loads Google Fonts and SheetJS from public CDNs (SheetJS is pinned with an integrity hash).
+- **security-audit:** full-audit mode writes reports to `~/security-audit-skill/<repo>/` (outside the project) and only runs on an explicit request. Our `security-reviewer` uses guidance mode only. The upstream `*.test.cjs` files were not vendored.
+- **Not vendored:** `ponytail-review`, which duplicates our `code-reviewer`; the ponytail hooks and commands; the rest of Superpowers (it has a SessionStart hook that adds context every session).
 
 ## Candidates (not adopted yet)
 
-Approved in `docs/skills-review-collectivebrain.md` but **not vendored yet**. Each needs the full read described below, then a move to the Extras table.
-
-| Name | Original source @ commit reviewed | License | Status |
-|---|---|---|---|
-| skill-creator | `anthropics/skills` @ `e4bb5d9` (`skills/skill-creator`) | Apache-2.0 | adopt: to vendor |
-| verification-before-completion | `obra/superpowers` @ `22f0b46` (`skills/verification-before-completion`) | MIT | adopt: to vendor |
-| ponytail (+ ponytail-review) | `dietrichgebert/ponytail` @ `96608e0` (`skills/ponytail*`) | MIT | adopt: to vendor |
-| security-audit | `cloudflare/security-audit-skill` @ `c1c8a8c` | MIT | adopt: to vendor; wire in as the security lane of `/e2e-code-review` |
-| 22 stack-specific skills | see the review doc, "Per project" | various | vendor on demand, when a project needs one |
+| Name | Status |
+|---|---|
+| 22 stack-specific skills | Vendor on demand when a project needs one. See `docs/skills-review-collectivebrain.md`, "Per project". |
 
 ## Adding an extra
 1. Copy the skill from its **original** repository at a specific commit into `extras/skills/<name>/` (agents go in `extras/agents/<name>.md`).

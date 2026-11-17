@@ -30,6 +30,11 @@ plan ──────►├── worker B                  ├──► synth
 - The orchestrator never reads raw files that a worker has already summarized, unless it is verifying.
 - Prefer "return paths + line numbers + one-line claim" over "return the code".
 
+## Keeping the orchestrator moving
+- **Ruling ledger:** the orchestrator settles ambiguities itself and logs `Ruling: <decision> — <why> — <cost if wrong>` in `PROGRESS.md`. It stops for a human only on irreversible, security-sensitive or outward-facing steps, or when the plan is broken. (From obra/superpowers, `subagent-driven-development`.)
+- **Status tokens:** workers that can't finish answer with exactly one of `too-big.`, `ambiguous.`, `needs-confirm.`, `unsure.` instead of guessing. The orchestrator then splits, clarifies or escalates. (From juliusbrussee/caveman, `cavecrew`.)
+- **Trust, but verify the absence:** spot-check any "No match." or empty result with one targeted search, and confirm claimed changes from `git diff`, not from the report.
+
 ## Pitfalls
 - **Vague briefs** lead to duplicated or overlapping work. Give every worker an explicit boundary ("only `src/api/`").
 - **Unbounded output** means a worker returns 10k tokens and the isolation benefit is gone.

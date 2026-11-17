@@ -9,6 +9,7 @@ A multi-role review that mirrors a human team. Each role is a subagent with its 
 | Orchestrator | main session | Opus | Scope the diff, dispatch, merge, decide | Final report |
 | Developer reviewer | `code-reviewer` | Sonnet | Correctness, security, performance, readability | Findings JSON |
 | Tester | `test-reviewer` | Sonnet | Coverage gaps, missing edge cases, runs the tests | Findings JSON + test results |
+| Security | `security-reviewer` | Sonnet | Trust-boundary violations in high-risk units; uses the `security-audit` extra in guidance mode if installed | Findings JSON |
 | Triage | `diff-scout` | Haiku | Map the diff: files, risk areas, size; split it into review units | Review plan JSON |
 | Verifier | `finding-verifier` | Sonnet | Fresh-context challenge of each finding | CONFIRMED / REJECTED per finding |
 | Manager | `eng-manager` | Opus | Risk, scope creep, release readiness, merge verdict | Verdict + summary |
@@ -19,7 +20,8 @@ A multi-role review that mirrors a human team. Each role is a subagent with its 
 diff ─► [1] diff-scout (haiku) ─► review units
               │
               ├─► [2a] code-reviewer × N units (parallel)
-              └─► [2b] test-reviewer (runs tests)
+              ├─► [2b] test-reviewer (runs tests)
+              └─► [2c] security-reviewer (only units tagged auth/payments/public-api/config/data-migration/concurrency)
                           │
                  [3] orchestrator merges + dedupes
                           │

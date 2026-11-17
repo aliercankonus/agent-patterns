@@ -4,6 +4,7 @@
 #   ./bootstrap.sh <target-dir> [--with a,b] [--force]   copy into a new or existing project
 #   ./bootstrap.sh --init        [--with a,b]             turn a repo created from the GitHub template into a project
 #   ./bootstrap.sh --list                                 list available extras
+#   --with recommended  installs skill-creator, verification-before-completion, ponytail, security-audit
 #
 # Core skills and agents are always installed. Extras (from extras/) only with --with.
 set -euo pipefail
@@ -11,7 +12,7 @@ set -euo pipefail
 SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET="" WITH="" FORCE=0 INIT=0
 
-usage() { sed -n '2,8p' "$0" | sed 's/^# \{0,1\}//'; exit "${1:-0}"; }
+usage() { sed -n '2,9p' "$0" | sed 's/^# \{0,1\}//'; exit "${1:-0}"; }
 die() { echo "error: $*" >&2; exit 1; }
 
 list_extras() {
@@ -54,7 +55,9 @@ copy() {
   echo "  add: ${dst#"$TARGET"/}"
 }
 
-# Validate extras before changing anything.
+# Validate extras before changing anything. "recommended" expands to the vetted default set.
+RECOMMENDED="skill-creator,verification-before-completion,ponytail,security-audit"
+WITH="${WITH//recommended/$RECOMMENDED}"
 IFS=',' read -r -a EXTRAS <<< "$WITH"
 for name in "${EXTRAS[@]}"; do
   [[ -z "$name" ]] && continue

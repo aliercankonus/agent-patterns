@@ -16,6 +16,10 @@
 
 ## Output format
 <JSON schema or fixed markdown sections; hard cap, e.g. ≤ 15 items, ≤ 300 words>
+- Lead with locations: `path:line — symbol — short note`. No prose preamble or recap.
+- Quote errors and code verbatim (shortest decisive line).
+- If you cannot finish, reply with exactly one status token and one line of reason:
+  `too-big.` (needs splitting) · `ambiguous.` (spec unclear) · `needs-confirm.` (risky/irreversible step) · `unsure.` (low confidence)
 
 ## Done when
 <explicit criteria>
