@@ -12,7 +12,7 @@ Finding format: `.claude/skills/e2e-code-review/finding-schema.json`. Every revi
 1. **Resolve the base.** For a PR, run `gh pr view <n> --json baseRefName,headRefName,body`. Otherwise use the base the user named. If none was named, use `origin/HEAD` when it exists (`git rev-parse --verify -q origin/HEAD`); in a local-only repo fall back to `main`, then `master`. Say which base you used in the report.
 2. **Triage.** Spawn `diff-scout` with the base and keep its JSON. Skip docs-only units.
 3. **Review in parallel**, in ONE message:
-   - one `code-reviewer` per unit (brief = unit files + risk tags + base, following `.claude/skills/delegate/brief-template.md`)
+   - one `code-reviewer` per unit (brief = unit files + risk tags + base, following `.claude/skills/delegate/brief-template.md`). For every unit the security reviewer also covers, add `Security lane: separate` to the brief, so the two reviewers don't spend tokens finding the same bugs.
    - one `test-reviewer` covering all units
    - one `security-reviewer` covering every unit tagged `auth`, `payments`, `public-api`, `config`, `data-migration` or `concurrency` (skip this if no unit carries those tags). It uses the `security-audit` skill in guidance mode when that extra is installed.
 4. **Merge.** Concatenate the findings and drop duplicates, keeping the higher severity. Two findings are duplicates when they are in the same file, make the same claim, and are within ±3 lines **or** in the same function.
