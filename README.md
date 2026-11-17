@@ -10,6 +10,7 @@ A catalog of proven patterns for running AI agents on real engineering tasks. It
 | Path | What it holds |
 |---|---|
 | `docs/research.md` | Research findings and sources behind every pattern |
+| `docs/skills-review-collectivebrain.md` | Verdicts on all 100 collectivebrain.de catalog skills |
 | `patterns/orchestration/` | Orchestrator–worker, model routing, context budgeting, compaction and handoff |
 | `patterns/workflows/` | End-to-end workflows (code review first) |
 | `.claude/agents/` | Core subagent definitions (Claude Code format) |

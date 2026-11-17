@@ -23,11 +23,15 @@ Every skill and agent that ships with this starter is listed here. Third-party s
 
 ## Candidates (not adopted yet)
 
-| Name | Original source | Status | Notes |
+Approved in `docs/skills-review-collectivebrain.md` but **not vendored yet**. Each needs the full read described below, then a move to the Extras table.
+
+| Name | Original source @ commit reviewed | License | Status |
 |---|---|---|---|
-| skill-creator | `anthropics/skills` | to review | Build and test new skills for this repo |
-| frontend-design | `anthropics/skills` | to review | Only for projects with a UI |
-| collectivebrain.de catalog | various | blocked | Full list not yet retrieved; review category by category (AI & Automation, Office & Data first) |
+| skill-creator | `anthropics/skills` @ `e4bb5d9` (`skills/skill-creator`) | Apache-2.0 | adopt: to vendor |
+| verification-before-completion | `obra/superpowers` @ `22f0b46` (`skills/verification-before-completion`) | MIT | adopt: to vendor |
+| ponytail (+ ponytail-review) | `dietrichgebert/ponytail` @ `96608e0` (`skills/ponytail*`) | MIT | adopt: to vendor |
+| security-audit | `cloudflare/security-audit-skill` @ `c1c8a8c` | MIT | adopt: to vendor; wire in as the security lane of `/e2e-code-review` |
+| 22 stack-specific skills | see the review doc, "Per project" | various | vendor on demand, when a project needs one |
 
 ## Adding an extra
 1. Copy the skill from its **original** repository at a specific commit into `extras/skills/<name>/` (agents go in `extras/agents/<name>.md`).
