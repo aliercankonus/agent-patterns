@@ -40,6 +40,18 @@ Issues found in the `ccdb4a8` run, fixed in `9ebad7b` and checked in the run abo
 
 The `9ebad7b` run also showed that the security reviewer opens the security-audit skill (`SKILL.md`, `ATTACK-CLASSES.md`, by its own report).
 
+### `8cd1644` targeted check: changed agents only
+This session had loaded the agent definitions before the change, so the two changed agents were run as general-purpose Sonnet agents that read their new definition files. The other stages were unchanged from the `df39f5d` run.
+
+| Check | Result |
+|---|---|
+| `security-reviewer`, planted branch | ✅ Opened the principles, `ATTACK-CLASSES.md` and `WEB-PROTOCOL-AND-AUTH.md` (tag `auth`). Found all 4 security bugs (D1–D4). |
+| `security-reviewer`, fixed branch | ✅ Opened the principles, `ATTACK-CLASSES.md` and `DATA-ISOLATION-AND-LIFECYCLE.md` (tag `data-migration`). No findings, which is correct. |
+| `code-reviewer` with `Security lane: separate` | ✅ **The overlap fix works.** No pure security findings; access control explicitly left to the security lane. Still caught the migration gap, and found 2 real functional bugs: an apostrophe in search crashes it, and `%`/`_` match everything. |
+
+- **Severity drift:** after reading the skill's severity scale, the security reviewer rated D2–D4 "major" rather than "critical". Only D1 (no account needed) stayed critical. BLOCK is unaffected.
+- **Token counts from this check aren't comparable.** General-purpose stand-ins carry about 55k tokens of overhead each. The extra skill reading is estimated at about 5–10k tokens per review. Measure it on the next full run in a fresh session.
+
 ### `df39f5d` run notes
 - **Fixed-branch check (should approve).** Alongside the planted run, all 8 findings were fixed in a throwaway copy, with 13 new tests that fail on the buggy code and pass after the fix. Reviewing that branch gave **APPROVE**. No critical or major findings remained. The reviewers surfaced a real spec conflict: README says "only their own notes", while docs/sharing.md lets anyone signed in read shared notes. The manager flagged it for a product decision. To repeat this check, fix the bugs in a `setup.sh` copy and re-review it.
 - **Reviewer overlap fix: inconclusive.** The developer reviewer still reported the four security bugs despite `Security lane: separate`. Agent definitions load when a session starts, and this session started before `code-reviewer.md` was edited, so it most likely ran the old definition. Re-check in a fresh session: the developer reviewer should report no security findings.
