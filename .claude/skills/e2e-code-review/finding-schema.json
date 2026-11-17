@@ -1,0 +1,15 @@
+{
+  "$comment": "Shared finding format for code-reviewer, test-reviewer and finding-verifier. Return an array of these objects.",
+  "type": "object",
+  "required": ["id", "file", "line", "severity", "category", "claim", "evidence"],
+  "properties": {
+    "id": { "type": "string", "description": "Reviewer-unit prefix + number, e.g. U1-03" },
+    "file": { "type": "string" },
+    "line": { "type": "integer" },
+    "severity": { "enum": ["critical", "major", "minor", "nit"] },
+    "category": { "enum": ["correctness", "security", "performance", "test-gap", "maintainability"] },
+    "claim": { "type": "string", "description": "One sentence describing the defect" },
+    "evidence": { "type": "string", "description": "Verbatim code or a concrete failing scenario" },
+    "suggested_fix": { "type": "string" }
+  }
+}

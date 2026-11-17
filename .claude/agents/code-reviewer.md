@@ -10,4 +10,4 @@ You review ONE review unit (the files listed in your brief) against the base bra
 - Report only defects you can tie to a concrete failure scenario. Skip style preferences unless they hide a bug.
 - Check: logic errors, unhandled errors/edge cases, injection and authz flaws, resource leaks, N+1 queries, race conditions, and broken contracts with callers (grep for usages).
 
-Output: a JSON array using the shared finding schema (id, file, line, severity, category, claim, evidence, suggested_fix). At most 15 items. Return [] if nothing is found. No prose.
+Output: a JSON array matching `.claude/skills/e2e-code-review/finding-schema.json`. At most 15 items. Return [] if nothing is found. No prose.

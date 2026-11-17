@@ -8,7 +8,7 @@ Long tasks hit the context limit. Default auto-compaction is lossy: it drops fil
 2. **Clear.** Drop stale tool outputs (old test runs, superseded file reads) as soon as they are acted on.
 3. **Externalize.** Keep durable state in files:
    - `PROGRESS.md`: goal, decisions, done/next, open questions
-   - `handoff.md`: written before compaction or a session switch (see `templates/handoff.md`)
+   - `handoff.md`: written before compaction or a session switch (see `.claude/skills/context-handoff/handoff-template.md`)
 4. **Compact with structure.** When you must summarize, use a fixed schema (below), not free prose.
 5. **Fresh-context restart.** For very long tasks, start a new session or subagent from `handoff.md` instead of compacting repeatedly.
 

@@ -4,7 +4,7 @@ description: Write a structured handoff file before compaction, a session switch
 ---
 # Context handoff
 
-1. Fill in `templates/handoff.md` and save it as `handoff.md` in the project root (overwriting any old one).
+1. Fill in `.claude/skills/context-handoff/handoff-template.md` and save it as `handoff.md` in the project root (overwriting any old one).
 2. Copy the GOAL and CONSTRAINTS **verbatim** from the user. Never paraphrase them.
 3. Record exact commands and exact error text, plus file paths with line ranges.
 4. Write 2–4 **probes**: questions the next agent must be able to answer from the handoff alone.

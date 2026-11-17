@@ -12,9 +12,12 @@ A catalog of proven patterns for running AI agents on real engineering tasks. It
 | `docs/research.md` | Research findings and sources behind every pattern |
 | `patterns/orchestration/` | Orchestrator–worker, model routing, context budgeting, compaction and handoff |
 | `patterns/workflows/` | End-to-end workflows (code review first) |
-| `templates/` | Delegation brief and handoff templates |
-| `.claude/agents/` | Ready-to-use subagent definitions (Claude Code format) |
-| `.claude/skills/` | Skills that run the workflows (`/e2e-code-review`, `/delegate`, `/context-handoff`) |
+| `.claude/agents/` | Core subagent definitions (Claude Code format) |
+| `.claude/skills/` | Core skills (`/e2e-code-review`, `/delegate`, `/context-handoff`), each with its templates |
+| `extras/` | Opt-in skills and agents, installed per project with `--with` |
+| `skills.manifest.md` | Every skill and agent: source, pinned commit, review status |
+| `templates/CLAUDE.project.md` | The CLAUDE.md a new project starts from |
+| `bootstrap.sh` | Installs the starter into a project |
 
 ## Core principles
 
@@ -26,10 +29,43 @@ A catalog of proven patterns for running AI agents on real engineering tasks. It
 6. **Verify adversarially.** A separate agent with fresh context checks findings before they are reported.
 7. **Measure tokens per *task*, not per request.** Over-compressing context causes re-reads and costs more in total.
 
-## Quick start (Claude Code)
+## Starting a new project
+
+**Option A: from the GitHub template** (for a brand-new repository)
 
 ```bash
-cp -r .claude /path/to/your/project/
+gh repo create my-project --private --template <owner>/agent-patterns --clone
 ```
 
-Then, inside that project, run `/e2e-code-review` on a branch or PR, or `/delegate <task>` to apply the orchestrator pattern.
+```bash
+cd my-project && ./bootstrap.sh --init
+```
+
+`--init` replaces CLAUDE.md with the project template, moves the pattern docs to `docs/agent-patterns/`, and removes the files only the starter needs.
+
+**Option B: copy into a new or existing project**
+
+```bash
+./bootstrap.sh ../my-project
+```
+
+Existing files are never overwritten unless you pass `--force`. If the project already has a CLAUDE.md, the template is written to `CLAUDE.agent-patterns.md` for you to merge.
+
+**Opt-in extras** (either option):
+
+```bash
+./bootstrap.sh --list
+```
+
+```bash
+./bootstrap.sh ../my-project --with skill-creator
+```
+
+Each install records the starter version and extras in `.claude/agent-patterns.version`, so you can tell later which projects are behind.
+
+After installing, fill in the `{{placeholders}}` in CLAUDE.md, then use `/delegate`, `/e2e-code-review` and `/context-handoff`.
+
+## Maintaining the starter
+- Turn on the template flag once the repository is on GitHub: `gh repo edit <owner>/agent-patterns --template`
+- Rules for changing the starter itself are in `CLAUDE.md`.
+- Adding a third-party skill: follow "Adding an extra" in `skills.manifest.md`.

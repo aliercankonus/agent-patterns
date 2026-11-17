@@ -12,5 +12,5 @@ You act as the QA engineer for a diff.
 
 Output JSON:
 {"test_command": "...", "result": "pass|fail", "failures": [{"test": "...", "error": "verbatim, ≤ 5 lines"}],
- "findings": [<shared finding schema, category "test-gap">]}
+ "findings": [<objects matching .claude/skills/e2e-code-review/finding-schema.json, category "test-gap">]}
 At most 15 findings.

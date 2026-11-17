@@ -12,7 +12,7 @@ A single agent doing everything fills its context with search noise and loses tr
 - Tiny tasks: delegation overhead (≈ brief + summary + coordination) exceeds the savings.
 
 ## Mechanics
-1. **Plan (strong model).** Break the task into N subtasks, each with a brief (see `templates/delegation-brief.md`).
+1. **Plan (strong model).** Break the task into N subtasks, each with a brief (see `.claude/skills/delegate/brief-template.md`).
 2. **Fan out (cheaper models, in parallel).** Each worker gets *only* its brief plus pointers (paths, line ranges, IDs).
 3. **Workers return structured output.** JSON or fixed sections, with a hard size cap (e.g. ≤ 300 words or ≤ 20 findings).
 4. **Synthesize (strong model).** Merge, dedupe and resolve conflicts.

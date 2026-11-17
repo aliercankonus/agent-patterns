@@ -2,7 +2,7 @@
 
 The brief is the worker's entire world. It starts cold, so anything you leave out it must rediscover, and that costs tokens.
 
-Required fields (see `templates/delegation-brief.md`):
+Required fields (see `.claude/skills/delegate/brief-template.md`):
 1. **Objective:** what question to answer or what change to make, in one sentence.
 2. **Why:** the larger goal, so the worker can make sensible judgment calls.
 3. **Inputs:** exact paths, line ranges, IDs, commands. Never "look around the repo".
