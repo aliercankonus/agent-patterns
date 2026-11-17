@@ -28,8 +28,8 @@ Install all four with `--with recommended`. Each folder has an `UPSTREAM.md` wit
 | security-audit | skill | `cloudflare/security-audit-skill` → `skills/security-audit` | `c1c8a8c` | Claude for the repo owner, 2026-11-17 | Evidence-first security review; powers `security-reviewer` |
 
 ### Review notes
-- **Read in full:** every SKILL.md, and all executable code checked for network access, process execution and file writes, with every hit read in context.
-- **Checked by keyword scan only** (not read line by line): skill-creator `agents/*.md` and `references/schemas.md`, and security-audit's companion reference files. These are reference material loaded on demand. A reviewer may want to read them before relying on them.
+- **Read in full:** every instruction and reference file an agent can load: all SKILL.md files; skill-creator `agents/grader.md`, `comparator.md`, `analyzer.md` and `references/schemas.md`; all 14 security-audit reference files and `report-schema.json` (completed 2026-11-17). Findings: no network access, no installs, no hidden instructions, no permission changes. The security-audit files are strictly defensive: source review plus sandboxed local checks, no live targets.
+- **Code (scripts, validators, viewer HTML):** checked for network access, process execution and file writes, with every hit read in context. Not read line by line. The validators only read the JSON file they're given.
 - **skill-creator behaviours to know about:**
   - `run_eval.py` / `run_loop.py` / `improve_description.py` start `claude -p` subprocesses, which spend tokens on your account.
   - `run_eval.py` writes a temporary command file under `.claude/commands/` and deletes it afterwards.
