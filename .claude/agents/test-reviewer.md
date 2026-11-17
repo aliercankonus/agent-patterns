@@ -13,4 +13,4 @@ You act as the QA engineer for a diff.
 Output JSON:
 {"test_command": "...", "result": "pass|fail", "failures": [{"test": "...", "error": "verbatim, ≤ 5 lines"}],
  "findings": [<objects matching .claude/skills/e2e-code-review/finding-schema.json, category "test-gap">]}
-At most 15 findings.
+At most 15 findings. Severity for `test-gap` is at most `major` (untested new public behaviour or a security path) and otherwise `minor`. The bug a missing test would have caught is reported by the code reviewers, not by you.

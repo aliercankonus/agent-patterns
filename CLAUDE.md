@@ -8,3 +8,4 @@
 - Every skill or agent, core or extra, has a row in `skills.manifest.md`. Third-party extras are vendored from their original source at a pinned commit, after a full read.
 - Claims about performance or cost must cite a source in `docs/research.md`.
 - After changing `bootstrap.sh`, test both flows: copy into an empty directory, and `--init` on a throwaway clone.
+- After changing `/e2e-code-review` or its agents, re-run `fixtures/e2e-code-review/notes-sample` and update its "Last run" table.

@@ -19,6 +19,7 @@ A catalog of proven patterns for running AI agents on real engineering tasks. It
 | `skills.manifest.md` | Every skill and agent: source, pinned commit, review status |
 | `templates/CLAUDE.project.md` | The CLAUDE.md a new project starts from |
 | `bootstrap.sh` | Installs the starter into a project |
+| `fixtures/` | Test fixtures for the skills (e.g. a sample project with planted bugs for `/e2e-code-review`) |
 
 ## Core principles
 

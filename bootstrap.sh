@@ -96,7 +96,7 @@ printf 'version=%s\nextras=%s\ninstalled=%s\n' "$VERSION" "$WITH" "$(date -u +%Y
 
 # --init: remove starter-only files so the repo becomes a clean project.
 if [[ $INIT -eq 1 ]]; then
-  rm -rf "$SRC/patterns" "$SRC/docs/research.md" "$SRC/extras" "$SRC/templates" "$SRC/skills.manifest.md"
+  rm -rf "$SRC/patterns" "$SRC/docs/research.md" "$SRC/extras" "$SRC/templates" "$SRC/skills.manifest.md" "$SRC/fixtures"
   printf '# %s\n\nCreated from the agent-patterns starter (%s). See `docs/agent-patterns/`.\n' \
     "$(basename "$SRC")" "$VERSION" > "$SRC/README.md"
   rm -f "$SRC/bootstrap.sh"
